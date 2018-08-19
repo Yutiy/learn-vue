@@ -35,6 +35,7 @@ export function initMixin (Vue: Class<Component>) {
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
+      // parent options, current options, vm
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor),
         options || {},
@@ -43,6 +44,7 @@ export function initMixin (Vue: Class<Component>) {
     }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
+      // proxy代理
       initProxy(vm)
     } else {
       vm._renderProxy = vm
@@ -53,7 +55,7 @@ export function initMixin (Vue: Class<Component>) {
     initEvents(vm)
     initRender(vm)
     callHook(vm, 'beforeCreate')
-    initInjections(vm) // resolve injections before data/props
+    initInjections(vm) // resolve injections before data/props, 于将父组件provide中定义的值，通过inject注入到子组件，且这些属性不会被观察。
     initState(vm)
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
@@ -92,8 +94,11 @@ export function initInternalComponent (vm: Component, options: InternalComponent
   }
 }
 
+// 合并构造器及构造器父级上定义的options
 export function resolveConstructorOptions (Ctor: Class<Component>) {
   let options = Ctor.options
+
+  // 有super属性，说明Ctor是通过Vue.extend()方法创建的子类
   if (Ctor.super) {
     const superOptions = resolveConstructorOptions(Ctor.super)
     const cachedSuperOptions = Ctor.superOptions

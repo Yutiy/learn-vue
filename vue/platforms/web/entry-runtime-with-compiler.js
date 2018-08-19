@@ -14,6 +14,7 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// define Vue.prototype.$mount
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
@@ -95,6 +96,7 @@ function getOuterHTML (el: Element): string {
   }
 }
 
+// mount compileToFunctions to Vue.compile
 Vue.compile = compileToFunctions
 
 export default Vue

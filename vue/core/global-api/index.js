@@ -44,6 +44,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   Vue.delete = del
   Vue.nextTick = nextTick
 
+  // directives、filters
   Vue.options = Object.create(null)
   ASSET_TYPES.forEach(type => {
     Vue.options[type + 's'] = Object.create(null)
@@ -53,6 +54,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   // components with in Weex's multi-instance scenarios.
   Vue.options._base = Vue
 
+  // builtInComponents -> KeepAlive
   extend(Vue.options.components, builtInComponents)
 
   initUse(Vue)

@@ -150,7 +150,7 @@ LIFECYCLE_HOOKS.forEach(hook => {
 })
 
 /**
- * Assets
+ * Assets -> components、directives、filters
  *
  * When a vm is present (instance creation), we need to do
  * a three-way merge between constructor options, instance
@@ -368,6 +368,7 @@ export function mergeOptions (
   vm?: Component
 ): Object {
   if (process.env.NODE_ENV !== 'production') {
+    // check child components name
     checkComponents(child)
   }
 
@@ -375,13 +376,17 @@ export function mergeOptions (
     child = child.options
   }
 
+  // normalize child props
   normalizeProps(child, vm)
   normalizeInject(child, vm)
+  // normalize child directives
   normalizeDirectives(child)
+  // options.extends
   const extendsFrom = child.extends
   if (extendsFrom) {
     parent = mergeOptions(parent, extendsFrom, vm)
   }
+  // options.mixins
   if (child.mixins) {
     for (let i = 0, l = child.mixins.length; i < l; i++) {
       parent = mergeOptions(parent, child.mixins[i], vm)

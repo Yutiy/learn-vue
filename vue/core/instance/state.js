@@ -45,7 +45,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
-export function initState (vm: Component) {
+export function initState (vm: Component) {   // init props、methods、data、computed、watch
   vm._watchers = []
   const opts = vm.$options
   if (opts.props) initProps(vm, opts.props)
